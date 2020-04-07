@@ -41,7 +41,7 @@ public class UserService implements UserDetailsService {
 
         //为userdsDetail赋值
         userInfo.setUsername(userModel.getUsername());
-        userInfo.setPassword(userModel.getPassword());
+        userInfo.setPassword(userModel.getSalt()+userModel.getPassword());
         userInfo.setRoles(userModel.getRoles());
 
         return userInfo;

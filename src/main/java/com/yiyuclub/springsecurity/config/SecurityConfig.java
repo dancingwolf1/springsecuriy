@@ -72,8 +72,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
+    //官方推荐使用BCrypt加密
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }

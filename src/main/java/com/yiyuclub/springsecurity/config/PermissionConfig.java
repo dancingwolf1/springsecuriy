@@ -4,6 +4,7 @@ import com.yiyuclub.springsecurity.dao.IdeaUserModelRepository;
 import com.yiyuclub.springsecurity.models.IdeaRoleModel;
 import com.yiyuclub.springsecurity.models.IdeaUserModel;
 import com.yiyuclub.springsecurity.models.PermissonModel;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,13 +21,12 @@ public class PermissionConfig {
     private AntPathMatcher antPathMatcher = new AntPathMatcher();
 
     public boolean hasPermission(HttpServletRequest request, Authentication authentication) {
-        UserDetails principal = (UserDetails) authentication.getPrincipal();
+        Object principal = authentication.getPrincipal();
 
         boolean hasPermission = false;
 
         if (principal instanceof UserDetails) {
-            String username = principal.getUsername();
-
+            String username =  ((UserDetails) principal).getUsername();
             IdeaUserModel user = userModelRepository.findByUsername(username);
             if (user != null) {
                 for (IdeaRoleModel role : user.getRoles()) {
